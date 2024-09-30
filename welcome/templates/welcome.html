@@ -1,0 +1,36 @@
+{% extends 'welcome/base.html' %}
+
+{% block title %}Bienvenidos a Clínica Mírame{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="display-4">Sistema clínico MIRAME</h1>
+
+        {% if request.user.is_authenticated %}
+            <p class="lead">Bienvenido, <strong>{{ request.user.username }}</strong>.</p>
+            <p>Aquí tienes acceso a las funciones administrativas:</p>
+
+            <!-- Botones para generar errores -->
+            <div class="mb-3">
+                <form action="{% url 'error_escritura' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Error de Escritura</button>
+                </form>
+
+                <form action="{% url 'error_sistema' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">Error de Sistema</button>
+                </form>
+            </div>
+
+            <!-- Opción de cerrar sesión -->
+            <a href="{% url 'logout' %}" class="btn btn-primary">Cerrar Sesión</a>
+
+        {% else %}
+            <p>Por favor, inicie sesión para acceder a las funcionalidades.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Iniciar Sesión</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
